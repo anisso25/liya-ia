@@ -53,9 +53,9 @@ while True:
                 print("Commande audio: {}".format(text))
 
                 if "arrêt" in text.lower():
-                    print("Arrêt de l'écoute.")
+                    print("Désactivation de l'écoute.")
                     listening = False
-                    break  # Sortez de la boucle
+                    continue  # Passe à l'itération suivante sans arrêter la boucle
 
                 elif "quelle heure est-il" in text.lower():
                     current_time = get_current_time()
@@ -68,9 +68,9 @@ while True:
 
                     # Ajoutez une vérification pour décider d'arrêter ou continuer
                     if "Impossible d'obtenir les données météorologiques" in weather_response:
-                        print("Arrêt de l'écoute.")
+                        print("Désactivation de l'écoute.")
                         listening = False
-                        break
+                        continue  # Passe à l'itération suivante sans arrêter la boucle
 
             # Activez l'écoute si nécessaire
             if "début" in text.lower():
@@ -83,3 +83,7 @@ while True:
             print(
                 "Erreur lors de la requête à Google Web Speech API; {0}".format(e))
             break  # Sortez de la boucle en cas d'erreur de requête
+
+        # Ajoutez une vérification pour arrêter le programme
+        if "au revoir" in text.lower():
+            break
