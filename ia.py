@@ -1,33 +1,19 @@
 import speech_recognition as sr
-import requests
-from datetime import datetime
+import openai
 
-# Clé API OpenWeatherMap (obtenez la vôtre sur https://openweathermap.org/)
-api_key = "04064b770955c32f56f17d1e2084be4d"
-
-# Fonction pour obtenir l'heure actuelle
+# Assurez-vous que votre clé API OpenAI GPT est correctement configurée
+openai.api_key = "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"
 
 
-def get_current_time():
-    now = datetime.now()
-    current_time = now.strftime("%H:%M")
-    return current_time
-
-# Fonction pour obtenir la météo par ville
-
-
-def get_weather(city):
-    base_url = "http://api.openweathermap.org/data/2.5/weather"
-    params = {"q": city, "appid": api_key, "lang": "fr", "units": "metric"}
-    response = requests.get(base_url, params=params)
-    weather_data = response.json()
-
-    if "weather" not in weather_data:
-        return f"Impossible d'obtenir les données météorologiques pour {city}."
-
-    description = weather_data["weather"][0]["description"]
-    temperature = weather_data["main"]["temp"]
-    return f"La météo à {city} est {description}. La température est d'environ {temperature} degrés Celsius."
+def chat_with_gpt(prompt):
+    response = openai.Completion.create(
+        engine="text-davinci-002",
+        prompt=prompt,
+        max_tokens=150,
+        n=1,
+        stop=None
+    )
+    return response.choices[0].text.strip()
 
 
 # Créer un objet Recognizer
@@ -44,35 +30,25 @@ while True:
         audio = recognizer.listen(source)
 
         try:
+            # Convertir l'audio en texte
             text = recognizer.recognize_google(audio, language="fr-FR")
             print("Vous avez dit: {}".format(text))
 
-            # Si l'écoute est activée, traitez la commande
+            # Vérifier si l'utilisateur veut fermer l'application
+            if "au revoir" in text.lower():
+                print("Fermeture de l'application...")
+                break
+
+            # Si l'écoute est activée, envoyer la question à ChatGPT
             if listening:
-                # Ajoutez cette ligne pour déboguer
-                print("Commande audio: {}".format(text))
-
-                if "arrêt" in text.lower():
-                    print("Désactivation de l'écoute.")
+                if "arrête" in text.lower():
+                    print("Désactivation de l'écoute...")
                     listening = False
-                    continue  # Passe à l'itération suivante sans arrêter la boucle
+                else:
+                    chat_response = chat_with_gpt(text)
+                    print("Réponse de ChatGPT: {}".format(chat_response))
 
-                elif "quelle heure est-il" in text.lower():
-                    current_time = get_current_time()
-                    print("Il est actuellement {}".format(current_time))
-
-                elif "comment est la météo à" in text.lower():
-                    city = text.split("comment est la météo à")[-1].strip()
-                    weather_response = get_weather(city)
-                    print(weather_response)
-
-                    # Ajoutez une vérification pour décider d'arrêter ou continuer
-                    if "Impossible d'obtenir les données météorologiques" in weather_response:
-                        print("Désactivation de l'écoute.")
-                        listening = False
-                        continue  # Passe à l'itération suivante sans arrêter la boucle
-
-            # Activez l'écoute si nécessaire
+            # Activer l'écoute si nécessaire
             if "début" in text.lower():
                 print("Activation de l'écoute...")
                 listening = True
@@ -82,8 +58,4 @@ while True:
         except sr.RequestError as e:
             print(
                 "Erreur lors de la requête à Google Web Speech API; {0}".format(e))
-            break  # Sortez de la boucle en cas d'erreur de requête
-
-        # Ajoutez une vérification pour arrêter le programme
-        if "au revoir" in text.lower():
-            break
+            break  # Sortir de la boucle en cas d'erreur de requête

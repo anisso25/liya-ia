@@ -2,7 +2,7 @@ import speech_recognition as sr
 import openai
 
 # Assurez-vous que votre clé API OpenAI GPT est correctement configurée
-openai.api_key = "04064b770955c32f56f17d1e2084be4d"
+openai.api_key = "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"
 
 
 def chat_with_gpt(prompt):
