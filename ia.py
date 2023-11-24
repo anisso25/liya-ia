@@ -1,8 +1,11 @@
 import speech_recognition as sr
 import openai
+from gtts import gTTS
+import os
+import subprocess
 
 # Assurez-vous que votre clé API OpenAI GPT est correctement configurée
-openai.api_key = "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"
+openai.api_key = "clé_api"
 
 
 def chat_with_gpt(prompt):
@@ -48,6 +51,9 @@ while True:
                     chat_response = chat_with_gpt(text)
                     print("Réponse de ChatGPT: {}".format(chat_response))
 
+                    # Utiliser la commande 'say' pour la synthèse vocale sur macOS
+                    subprocess.run(["say", chat_response])
+
             # Activer l'écoute si nécessaire
             if "début" in text.lower():
                 print("Activation de l'écoute...")
@@ -59,3 +65,5 @@ while True:
             print(
                 "Erreur lors de la requête à Google Web Speech API; {0}".format(e))
             break  # Sortir de la boucle en cas d'erreur de requête
+        except Exception as e:
+            print("Erreur inattendue : {}".format(e))
