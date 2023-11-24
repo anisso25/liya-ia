@@ -5,7 +5,7 @@ import os
 import subprocess
 
 # Assurez-vous que votre clé API OpenAI GPT est correctement configurée
-openai.api_key = "clé_api"
+openai.api_key = "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"
 
 
 def chat_with_gpt(prompt):
