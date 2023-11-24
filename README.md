@@ -11,14 +11,14 @@ Remplacez la valeur de openai.api_key dans le code par votre propre clé API.
 ## Dépendances :
 ## Installez les dépendances en utilisant la commande suivante :
 
-Copy code
-pip install speech_recognition openai gtts
+Copy code 
+"pip install speech_recognition openai gtts"
 
 ## Exécution de l'application :
 ## Exécutez le script Python à l'aide de la commande suivante :
 
-Copy code
-python ai.py
+Copy code 
+"python ai.py"
 
 ## Interaction avec l'application :
 
@@ -30,9 +30,9 @@ L'application est conçue pour écouter les commandes de l'utilisateur.
 ## Clonage du référentiel :
 ## Clonez ce référentiel sur votre machine locale en utilisant la commande suivante :
 
-bash
-Copy code
-git clone <https://github.com/anisso25/liya-ia.git>
+bash 
+Copy code 
+"git clone <https://github.com/anisso25/liya-ia.git>"
 
 ## Configuration de l'environnement :
 
@@ -40,8 +40,8 @@ Assurez-vous que vous avez une version de Python compatible installée sur votre
 ## Installation des dépendances :
 ## Exécutez la commande suivante pour installer les dépendances requises :
 
-Copy code
-pip install speech_recognition openai gtts
+Copy code 
+"pip install speech_recognition openai gtts"
 
 ## Configuration de la clé API OpenAI GPT :
 
@@ -50,5 +50,5 @@ Remplacez la valeur de openai.api_key dans le code par votre propre clé API.
 ## Exécution de l'application :
 ## Exécutez le script Python à l'aide de la commande suivante :
 
-Copy code
-python ai.py
+Copy code 
+"python ai.py"
